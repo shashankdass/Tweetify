@@ -44,23 +44,7 @@ public class TimelineFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentTimelineBinding = DataBindingUtil.setContentView(getActivity(),R.layout.fragment_timeline);
-        rvTweets = fragmentTimelineBinding.rvTweets;
-        swipeContainer = fragmentTimelineBinding.swipeContainer;
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.darker_gray);
-        tweets = new ArrayList<>();
-        ItemClickSupport.addTo(rvTweets).setOnItemClickListener(
-                new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Intent detailsIntent = new Intent(getContext(),
-                                TweetDetailsActivity.class);
-                        detailsIntent.putExtra("tweet", Parcels.wrap(tweets.get(position)));
-                        startActivity(detailsIntent);
-                    }
-                }
-        );
+
     }
 
     @Override
@@ -78,8 +62,26 @@ public class TimelineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_timeline, container, false);
-        return view;
+//        View view = inflater.inflate(R.layout.fragment_timeline, container, false);
+        fragmentTimelineBinding = FragmentTimelineBinding.inflate(inflater,container,true);
+//        fragmentTimelineBinding = DataBindingUtil.setContentView(getActivity(),R.layout.fragment_timeline);
+        rvTweets = fragmentTimelineBinding.rvTweets;
+        swipeContainer = fragmentTimelineBinding.swipeContainer;
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.darker_gray);
+        tweets = new ArrayList<>();
+        ItemClickSupport.addTo(rvTweets).setOnItemClickListener(
+                new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Intent detailsIntent = new Intent(getContext(),
+                                TweetDetailsActivity.class);
+                        detailsIntent.putExtra("tweet", Parcels.wrap(tweets.get(position)));
+                        startActivity(detailsIntent);
+                    }
+                }
+        );
+        return fragmentTimelineBinding.getRoot();
     }
     protected void bindDataToAdapter() {
         // Bind adapter to recycler view object
@@ -101,7 +103,8 @@ public class TimelineFragment extends Fragment {
         // TODO: Update argument type and name
         void onNetworkFailure();
     }
-    protected void setAdapter(ArrayList<Tweet> newTweets) {
+
+    protected void fillUpAdapterWithData(ArrayList<Tweet> newTweets) {
         tweetAdapter.addAll(newTweets);
         swipeContainer.setRefreshing(false);
         if(newTweets.size() > 0) {

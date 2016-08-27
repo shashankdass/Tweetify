@@ -1,29 +1,23 @@
 package com.codepath.apps.mysimpletweets.fragments;
 
-import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepath.apps.mysimpletweets.NetworkFailure;
-import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApp;
 import com.codepath.apps.mysimpletweets.TwitterClient;
-import com.codepath.apps.mysimpletweets.activity.TweetDetailsActivity;
 import com.codepath.apps.mysimpletweets.listener.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.mysimpletweets.models.Tweet;
-import com.codepath.apps.mysimpletweets.utils.ItemClickSupport;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -47,6 +41,12 @@ public class HomeTimelineFragment extends TimelineFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -71,10 +71,8 @@ public class HomeTimelineFragment extends TimelineFragment {
         });
         bindDataToAdapter();
         populateTimeline();
-        View view = inflater.inflate(R.layout.fragment_timeline, container, false);
-
-        return view;
     }
+
     public void populateTimeline() {
         try {
             twitterClient.getHomeTimeline(new JsonHttpResponseHandler() {
@@ -82,7 +80,7 @@ public class HomeTimelineFragment extends TimelineFragment {
                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 //                    tweetAdapter.clear();
                     ArrayList<Tweet> newTweets = Tweet.fromJsonArray(response);
-                    setAdapter(newTweets);
+                    fillUpAdapterWithData(newTweets);
 
                 }
 
@@ -94,7 +92,7 @@ public class HomeTimelineFragment extends TimelineFragment {
         } catch (NetworkFailure networkFailure) {
             listener.onNetworkFailure();
             ArrayList<Tweet> newTweets = (ArrayList<Tweet>) Tweet.getAll();
-            setAdapter(newTweets);
+            fillUpAdapterWithData(newTweets);
         }
 
     }
