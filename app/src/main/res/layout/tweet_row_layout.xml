@@ -1,109 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout  android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <RelativeLayout
-    android:layout_width="wrap_content" android:layout_height="wrap_content">
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/iv_thumbnail"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/tv_headline"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/iv_thumbnail"
-        android:layout_toEndOf="@+id/iv_thumbnail"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/tv_details"
-        android:layout_alignLeft="@+id/tv_headline"
-        android:layout_alignStart="@+id/tv_headline"
-        android:layout_below="@+id/tv_headline"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:autoLink="all"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/tv_time"
-        android:layout_above="@+id/tv_details"
-        android:layout_alignBottom="@+id/tv_headline"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="100dp"
-        />
-
-
-
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/iv_mainimage"-->
-        <!--android:layout_below="@+id/tv_details"-->
-        <!--android:layout_alignLeft="@+id/tv_details"-->
-        <!--android:layout_alignStart="@+id/tv_details" />-->
-</RelativeLayout>
-        <LinearLayout
-        android:orientation="horizontal"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        card_view:cardBackgroundColor="#E6E6E6"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="8dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:fitsSystemWindows="true"
+        android:layout_margin = "15dp"
         >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iv_reply"
-            android:adjustViewBounds="true"
-            android:paddingLeft="@dimen/image_padding_left"
-            android:paddingRight="@dimen/image_padding_between"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iv_retweet"
-            android:adjustViewBounds="true"
+        <LinearLayout  android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_margin="10dp">
+            <RelativeLayout
+                android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-            android:paddingRight="10dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_num_of_retweets"
-            android:paddingRight="@dimen/image_padding_between"
-            android:textAlignment="center"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iv_star"
-            android:adjustViewBounds="true"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:src="@drawable/fav_icon"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_num_of_likes"/>
-    </LinearLayout>
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_thumbnail"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Large Text"
+                    android:id="@+id/tv_headline"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/iv_thumbnail"
+                    android:layout_toEndOf="@+id/iv_thumbnail"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/tv_details"
+                    android:layout_alignLeft="@+id/tv_headline"
+                    android:layout_alignStart="@+id/tv_headline"
+                    android:layout_below="@+id/tv_headline"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:autoLink="all"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/tv_time"
+                    android:layout_above="@+id/tv_details"
+                    android:layout_alignBottom="@+id/tv_headline"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="100dp"
+                    />
+            </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="6"
+                android:paddingLeft="55dp"
+                >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal|top"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/iv_reply"
+                        android:adjustViewBounds="true"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/iv_retweet"
+                        android:adjustViewBounds="true"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_num_of_retweets"
+                        android:textAlignment="center"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/iv_star"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/fav_icon"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:id="@+id/tv_num_of_likes"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
 </layout>

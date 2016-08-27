@@ -58,6 +58,18 @@ public class TwitterClient extends OAuthBaseClient {
 		}
 	}
 
+	public void getMentionsTimeline(AsyncHttpResponseHandler handler, long max_id, long since_id) throws NetworkFailure {
+		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+		RequestParams params = new RequestParams();
+
+		params.put("count", 25);
+		if (new NetworkHealthChecker(context).checkNetworkHealth())
+			getClient().get(apiUrl, params, handler);
+		else {
+			throw new NetworkFailure();
+		}
+	}
+
 	public void postOnHomeTimeline(AsyncHttpResponseHandler handler, String statusText, String replyStatusId, String userScreenName){
 		String apiUrl = getApiUrl("statuses/update.json");
 		RequestParams params = new RequestParams();

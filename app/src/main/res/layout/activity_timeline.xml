@@ -8,66 +8,56 @@
     android:fitsSystemWindows="true"
     tools:context="com.codepath.apps.mysimpletweets.activity.TimelineActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:background="@android:color/white"-->
+            <!--app:popupTheme="@style/AppTheme.PopupOverlay" >-->
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--&gt;-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="@dimen/image_size"-->
+                <!--android:layout_height="@dimen/image_size"-->
+                <!--android:src="@drawable/twitter_logo_blue"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:paddingTop="@dimen/logo_padding"-->
+                <!--android:paddingBottom="@dimen/logo_padding"-->
+
+                <!--/>-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="@dimen/image_size"-->
+                <!--android:layout_height="@dimen/image_size"-->
+                <!--android:src="@drawable/compose_icon"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:id="@+id/iv_compose" />-->
+
+
+        <!--</RelativeLayout>-->
+        <!--</android.support.v7.widget.Toolbar>-->
+
+
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+    <fragment
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:color/white"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            >
-
-            <ImageView
-                android:layout_width="@dimen/image_size"
-                android:layout_height="@dimen/image_size"
-                android:src="@drawable/twitter_logo_blue"
-                android:layout_centerHorizontal="true"
-                android:paddingTop="@dimen/logo_padding"
-                android:paddingBottom="@dimen/logo_padding"
-
-                />
-
-            <ImageView
-                android:layout_width="@dimen/image_size"
-                android:layout_height="@dimen/image_size"
-                android:src="@drawable/compose_icon"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:id="@+id/iv_compose" />
-        </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
-
-
-    </android.support.design.widget.AppBarLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.codepath.apps.mysimpletweets.activity.TimelineActivity"
-        tools:showIn="@layout/activity_timeline">
-        <android.support.v4.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/swipeContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_tweets"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autoLink="all"
-                />
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-    </RelativeLayout>
+        android:name="com.codepath.apps.mysimpletweets.fragments.HomeTimelineFragment"
+        android:id="@+id/fragment"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:layout="@layout/fragment_timeline" />
 
 
 </android.support.design.widget.CoordinatorLayout>

@@ -6,14 +6,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApp;
 import com.codepath.apps.mysimpletweets.TwitterClient;
 import com.codepath.apps.mysimpletweets.databinding.ActivityTweetDetailsBinding;
+import com.codepath.apps.mysimpletweets.dialogs.ReplyDialog;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
@@ -28,7 +26,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
     ActivityTweetDetailsBinding binding;
     Tweet tweet;
     TwitterClient twitterClient;
-    ReplyFragment replyFragment;
+    ReplyDialog replyDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +109,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
     private void showReplyFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        replyFragment = ReplyFragment.newInstance(tweet);
-        ft.add(replyFragment,"Reply").commit();
+        replyDialog = ReplyDialog.newInstance(tweet);
+        ft.add(replyDialog,"Reply").commit();
     }
 }

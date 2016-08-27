@@ -9,8 +9,7 @@ import android.view.View;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApp;
 import com.codepath.apps.mysimpletweets.TwitterClient;
-import com.codepath.apps.mysimpletweets.activity.ReplyFragment;
-import com.codepath.apps.mysimpletweets.databinding.TweetRowLayoutBinding;
+import com.codepath.apps.mysimpletweets.dialogs.ReplyDialog;
 import com.codepath.apps.mysimpletweets.databinding.TweetRowLayoutImageBinding;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.codepath.apps.mysimpletweets.utils.ParseRelativeDate;
@@ -31,7 +30,7 @@ public class TweetViewHolderWithImage extends RecyclerView.ViewHolder{
     private Context mContext;
     FragmentManager mFm;
     Tweet tweet;
-    ReplyFragment replyFragment;
+    ReplyDialog replyDialog;
     public TweetViewHolderWithImage(Context context, TweetRowLayoutImageBinding binding, FragmentManager fm) {
         super(binding.getRoot());
         this.binding = binding;
@@ -122,9 +121,9 @@ public class TweetViewHolderWithImage extends RecyclerView.ViewHolder{
     }
     private void showReplyFragment() {
 
-        replyFragment = ReplyFragment.newInstance(tweet);
+        replyDialog = ReplyDialog.newInstance(tweet);
         FragmentTransaction ft = mFm.beginTransaction();
-        ft.add(replyFragment,"Reply").commit();
+        ft.add(replyDialog,"Reply").commit();
     }
 
 

@@ -1,4 +1,4 @@
-package com.codepath.apps.mysimpletweets.activity;
+package com.codepath.apps.mysimpletweets.dialogs;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -19,8 +19,7 @@ import android.widget.ImageView;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApp;
 import com.codepath.apps.mysimpletweets.TwitterClient;
-import com.codepath.apps.mysimpletweets.databinding.ReplyFragmentBinding;
-import com.codepath.apps.mysimpletweets.models.Tweet;
+import com.codepath.apps.mysimpletweets.databinding.ComposeFragmentBinding;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
@@ -33,33 +32,49 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ComposeFragment.OnTweetListener} interface
+ * {@link OnTweetListener} interface
  * to handle interaction events.
- * Use the {@link ComposeFragment#newInstance} factory method to
+ * Use the {@link ComposeDialog#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ReplyFragment extends DialogFragment {
+public class ComposeDialog extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    ReplyFragmentBinding binding;
+    ComposeFragmentBinding binding;
     EditText messageBox;
     TwitterClient twitterClient;
     Button btnTweet;
     ImageView cancelTweet;
-    static Tweet tweet;
+    private OnTweetListener mListener;
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnTweetListener {
+        // TODO: Update argument type and name
+        void onSucessfulTweet();
+    }
+
+    public void setmListener(OnTweetListener mListener) {
+        this.mListener = mListener;
+    }
 
 
-    private OnFragmentInteractionListener mListener;
 
-    public ReplyFragment() {
+    public ComposeDialog() {
         // Required empty public constructor
     }
 
 
     // TODO: Rename and change types and number of parameters
-    public static ReplyFragment newInstance(Tweet tweetClick) {
-        ReplyFragment fragment = new ReplyFragment();
-        tweet = tweetClick;
+    public static ComposeDialog newInstance() {
+        ComposeDialog fragment = new ComposeDialog();
         return fragment;
     }
 
@@ -70,7 +85,6 @@ public class ReplyFragment extends DialogFragment {
         messageBox = binding.etTweet;
         btnTweet = binding.btnTweet;
         cancelTweet = binding.ivCancel;
-        binding.tvReplyTo.setHint("Reply to @"+tweet.getUser().getScreenName());
         twitterClient = TwitterApp.getRestClient();
         twitterClient.verifyCreds(new JsonHttpResponseHandler() {
             @Override
@@ -122,11 +136,10 @@ public class ReplyFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 String tweetMessage = messageBox.getText().toString();
-                String inReplyStatusID = ""+tweet.getUid();
                 twitterClient.postOnHomeTimeline(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
+                        mListener.onSucessfulTweet();
                         dismiss();
                     }
 
@@ -134,13 +147,13 @@ public class ReplyFragment extends DialogFragment {
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         Log.d("DEBUG", errorResponse.toString());
                     }
-                },tweetMessage,inReplyStatusID,tweet.getUser().getScreenName());
+                },tweetMessage,null,null);
             }
         });
         cancelTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dismiss();            }
+dismiss();            }
         });
     }
 
@@ -148,24 +161,11 @@ public class ReplyFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.reply_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.compose_fragment, container, false);
         View view = binding.getRoot();
 //here data must be an instance of the class MarsDataProvider
         return view;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction();
-    }
+
 }
