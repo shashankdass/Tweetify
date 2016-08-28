@@ -59,7 +59,10 @@
         <activity
             android:name=".activity.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.SearchTweetActivity"
+        <activity
+            android:name=".activity.SearchTweetActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.ContactsActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

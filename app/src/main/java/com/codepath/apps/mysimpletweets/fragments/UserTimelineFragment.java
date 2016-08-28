@@ -18,7 +18,6 @@ import com.codepath.apps.mysimpletweets.NetworkFailure;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApp;
 import com.codepath.apps.mysimpletweets.TwitterClient;
-import com.codepath.apps.mysimpletweets.adapters.TweetsAdapter;
 import com.codepath.apps.mysimpletweets.listener.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -30,35 +29,45 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class HomeTimelineFragment extends TimelineFragment {
-    TwitterClient twitterClient = TwitterApp.getRestClient();
-
+/**
+ * Created by sdass on 8/27/16.
+ */
+public class UserTimelineFragment  extends  TimelineFragment{
     private ArrayList<Tweet> tweets;
+    TwitterClient twitterClient = TwitterApp.getRestClient();
+    MenuItem miActionProgressItem;
 
 
-    public static HomeTimelineFragment newInstance() {
-        HomeTimelineFragment homeTimelineFragment = new HomeTimelineFragment();
-
-        return homeTimelineFragment;
+    public UserTimelineFragment() {
     }
-
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_action_bar, menu);
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        // Extract the action-view from the menu item
+        ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(miActionProgressItem);
+    }
+    public static UserTimelineFragment newInstance(String screenName) {
+        UserTimelineFragment userTimelineFragment = new UserTimelineFragment();
+        Bundle args = new Bundle();
+        args.putString("screen_name",screenName);
+        userTimelineFragment.setArguments(args);
+        return userTimelineFragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -88,7 +97,8 @@ public class HomeTimelineFragment extends TimelineFragment {
     public void populateTimeline() {
 //        miActionProgressItem.setVisible(true);
         try {
-            twitterClient.getHomeTimeline(new JsonHttpResponseHandler() {
+            String screenName = getArguments().getString("screen_name");
+            twitterClient.getUserTimeline(screenName,new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                     ArrayList<Tweet> newTweets = Tweet.fromJsonArray(response);
@@ -102,7 +112,7 @@ public class HomeTimelineFragment extends TimelineFragment {
                     Log.d("DEBUG", errorResponse.toString());
 //                    miActionProgressItem.setVisible(false);
                 }
-            }, TimelineFragment.max_id, TimelineFragment.since_id);
+            });
         } catch (NetworkFailure networkFailure) {
             listener.onNetworkFailure();
             ArrayList<Tweet> newTweets = (ArrayList<Tweet>) Tweet.getAll();

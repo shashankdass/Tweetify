@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<data>-->
+        <!--<import type="com.codepath.apps.mysimpletweets.models.User" />-->
+        <!--<variable name="user" type="User" />-->
+    <!--</data>-->
+    <RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/ll_toolbar"
+    android:id="@+id/rl_header"
+    android:layout_marginTop="10dp"
+    >
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/iv_profileImage"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+            <!--app:imageUrl= "@{user.profileImageURL}"-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_Name"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/iv_profileImage"
+            android:layout_toEndOf="@+id/iv_profileImage"
+            android:textSize="16sp"
+            android:layout_marginLeft="10dp"/>
+            <!--android:text="@{user.name}"-->
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_tagline"
+            android:layout_below="@+id/tv_Name"
+            android:layout_alignLeft="@+id/tv_Name"
+            android:layout_alignStart="@+id/tv_Name"
+            android:textSize="12sp"/>
+            <!--android:text="@{user.screenName}"-->
+
+
+    </RelativeLayout>
+</layout>

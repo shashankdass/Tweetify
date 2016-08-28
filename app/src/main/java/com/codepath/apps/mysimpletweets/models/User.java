@@ -3,10 +3,15 @@ package com.codepath.apps.mysimpletweets.models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  "user": {
@@ -151,6 +156,28 @@ public class User extends Model {
             e.printStackTrace();
         }
         return u;
+    }
+    public static ArrayList<User> fromJsonArray(JSONArray jsonArray) {
+        ArrayList<User> users = new ArrayList<>();
+        for (int i=0; i<jsonArray.length();i++) {
+            try {
+                User user = User.fromJSON(jsonArray.getJSONObject(i));
+                if(user != null) {
+                    users.add(user);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                continue;
+            }
+        }
+        return users;
+    }
+    public static List<User> getAll() {
+        // This is how you execute a query
+        return new Select()
+                .from(User.class)
+                .orderBy("Uid ASC")
+                .execute();
     }
 
 }

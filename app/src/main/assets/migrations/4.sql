@@ -1,0 +1,2 @@
+ALTER TABLE users ADD COLUMN Followers TEXT;
+ALTER TABLE users ADD COLUMN Following TEXT;

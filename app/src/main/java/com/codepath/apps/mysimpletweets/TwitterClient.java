@@ -136,4 +136,32 @@ public class TwitterClient extends OAuthBaseClient {
 
 	}
 
+	public void getFollowersList(String screenName, AsyncHttpResponseHandler handler) throws NetworkFailure {
+		String apiUrl = getApiUrl("followers/list.json");
+		RequestParams params = new RequestParams();
+		params.put("screen_name",screenName);
+		params.put("skip_status","true");
+		params.put("count", 25);
+		params.put("include_user_entities","false");
+		if (new NetworkHealthChecker(context).checkNetworkHealth())
+			getClient().get(apiUrl, params, handler);
+		else {
+			throw new NetworkFailure();
+		}
+	}
+
+	public void getFollowingList(String screenName, AsyncHttpResponseHandler handler) throws NetworkFailure {
+		String apiUrl = getApiUrl("friends/list.json");
+		RequestParams params = new RequestParams();
+		params.put("screen_name",screenName);
+		params.put("skip_status","true");
+		params.put("count", 25);
+		params.put("include_user_entities","false");
+		if (new NetworkHealthChecker(context).checkNetworkHealth())
+			getClient().get(apiUrl, params, handler);
+		else {
+			throw new NetworkFailure();
+		}
+	}
+
 }
