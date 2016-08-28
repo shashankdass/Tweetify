@@ -97,9 +97,43 @@ public class TwitterClient extends OAuthBaseClient {
 		getClient().post(apiUrl,handler);
 	}
 
-	public void verifyCreds(AsyncHttpResponseHandler handler) {
+	public void getUserInfo( AsyncHttpResponseHandler handler) throws NetworkFailure {
 		//https://api.twitter.com/1.1/account/verify_credentials.json
 		String apiUrl = getApiUrl("account/verify_credentials.json");
-		getClient().get(apiUrl,handler);
+
+		if (new NetworkHealthChecker(context).checkNetworkHealth())
+			getClient().get(apiUrl, null, handler);
+		else {
+			throw new NetworkFailure();
+		}
 	}
+
+	public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) throws NetworkFailure {
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("screen_name",screenName);
+
+		params.put("count", 25);
+		if (new NetworkHealthChecker(context).checkNetworkHealth())
+			getClient().get(apiUrl, params, handler);
+		else {
+			throw new NetworkFailure();
+		}
+
+	}
+
+	public void getSearchResults(String query, AsyncHttpResponseHandler handler) throws NetworkFailure {
+		String apiUrl = getApiUrl("search/tweets.json");
+		RequestParams params = new RequestParams();
+		params.put("q",query);
+		params.put("result_type","mixed");
+		params.put("count", 25);
+		if (new NetworkHealthChecker(context).checkNetworkHealth())
+			getClient().get(apiUrl, params, handler);
+		else {
+			throw new NetworkFailure();
+		}
+
+	}
+
 }

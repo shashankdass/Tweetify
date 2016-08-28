@@ -2,20 +2,14 @@ package com.codepath.apps.mysimpletweets.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.codepath.apps.mysimpletweets.NetworkFailure;
-import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApp;
 import com.codepath.apps.mysimpletweets.TwitterClient;
 import com.codepath.apps.mysimpletweets.listener.EndlessRecyclerViewScrollListener;
@@ -23,44 +17,54 @@ import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MentionsTimelineFragment extends TimelineFragment {
-    private ArrayList<Tweet> tweets;
+/**
+ * Created by sdass on 8/27/16.
+ */
+public class SearchFragment extends TimelineFragment {
     TwitterClient twitterClient = TwitterApp.getRestClient();
 
-    MenuItem miActionProgressItem;
+    private ArrayList<Tweet> tweets;
 
-    public MentionsTimelineFragment() {
-    }
 
-    public static MentionsTimelineFragment newInstance() {
-        MentionsTimelineFragment mentionsTimelineFragment = new MentionsTimelineFragment();
-        return mentionsTimelineFragment;
+    public static SearchFragment newInstance(String query) {
+        SearchFragment searchFragment = new SearchFragment();
+        Bundle args = new Bundle();
+        args.putString("query",query);
+        searchFragment.setArguments(args);
+        return searchFragment;
     }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.fragment_action_bar, menu);
+//        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+//        // Extract the action-view from the menu item
+//        ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(miActionProgressItem);
+//    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_action_bar, menu);
-        miActionProgressItem = menu.findItem(R.id.miActionProgress);
-        // Extract the action-view from the menu item
-        ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(miActionProgressItem);
-    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -89,13 +93,20 @@ public class MentionsTimelineFragment extends TimelineFragment {
 
     public void populateTimeline() {
 //        miActionProgressItem.setVisible(true);
+        String query = getArguments().getString("query");
         try {
-            twitterClient.getMentionsTimeline(new JsonHttpResponseHandler() {
+            twitterClient.getSearchResults(query,new JsonHttpResponseHandler() {
                 @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                    ArrayList<Tweet> newTweets = Tweet.fromJsonArray(response);
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    ArrayList<Tweet> newTweets = null;
+                    try {
+                        newTweets = Tweet.fromJsonArray(response.getJSONArray("statuses"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     fillUpAdapterWithData(newTweets);
 //                    miActionProgressItem.setVisible(false);
+
                 }
 
                 @Override
@@ -103,7 +114,7 @@ public class MentionsTimelineFragment extends TimelineFragment {
                     Log.d("DEBUG", errorResponse.toString());
 //                    miActionProgressItem.setVisible(false);
                 }
-            }, TimelineFragment.max_id, TimelineFragment.since_id);
+            });
         } catch (NetworkFailure networkFailure) {
             listener.onNetworkFailure();
             ArrayList<Tweet> newTweets = (ArrayList<Tweet>) Tweet.getAll();
@@ -111,5 +122,4 @@ public class MentionsTimelineFragment extends TimelineFragment {
         }
 
     }
-
 }

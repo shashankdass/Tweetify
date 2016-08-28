@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.codepath.apps.mysimpletweets.NetworkFailure;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApp;
 import com.codepath.apps.mysimpletweets.TwitterClient;
@@ -86,27 +87,31 @@ public class ComposeDialog extends DialogFragment {
         btnTweet = binding.btnTweet;
         cancelTweet = binding.ivCancel;
         twitterClient = TwitterApp.getRestClient();
-        twitterClient.verifyCreds(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                try {
-                    Picasso.with(getContext()).load(response.getString("profile_image_url"))
-                            .transform(new RoundedCornersTransformation(2,2)).into(binding.ivProfilePic);
-                    String name = response.getString("name");
-                    String screenName = response.getString("screen_name");
-                    binding.tvName.setText(name);
-                    binding.tvHashtag.setText("@"+screenName);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        try {
+            twitterClient.getUserInfo(new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    try {
+                        Picasso.with(getContext()).load(response.getString("profile_image_url"))
+                                .transform(new RoundedCornersTransformation(2,2)).into(binding.ivProfilePic);
+                        String name = response.getString("name");
+                        String screenName = response.getString("screen_name");
+                        binding.tvName.setText(name);
+                        binding.tvHashtag.setText("@"+screenName);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-            }
-        });
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+            });
+        } catch (NetworkFailure networkFailure) {
+            networkFailure.printStackTrace();
+        }
         messageBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {

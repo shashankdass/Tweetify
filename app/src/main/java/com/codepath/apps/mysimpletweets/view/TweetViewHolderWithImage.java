@@ -1,6 +1,7 @@
 package com.codepath.apps.mysimpletweets.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.View;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApp;
 import com.codepath.apps.mysimpletweets.TwitterClient;
+import com.codepath.apps.mysimpletweets.activity.ProfileActivity;
 import com.codepath.apps.mysimpletweets.dialogs.ReplyDialog;
 import com.codepath.apps.mysimpletweets.databinding.TweetRowLayoutImageBinding;
 import com.codepath.apps.mysimpletweets.models.Tweet;
@@ -17,6 +19,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import cz.msebera.android.httpclient.Header;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
@@ -42,9 +45,18 @@ public class TweetViewHolderWithImage extends RecyclerView.ViewHolder{
         this.tweet = tweet;
         binding.tvDetails.setText(tweet.getBody());
         binding.ivThumbnail.setImageResource(android.R.color.transparent);
+        binding.ivThumbnail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mContext, ProfileActivity.class);
+                i.putExtra("tweet", Parcels.wrap(tweet));
+                mContext.startActivity(i);
+            }
+        });
         Picasso.with(mContext).load(tweet.getUser().getProfileImageURL()).
                 transform(new RoundedCornersTransformation(5, 5)).into(binding.ivThumbnail);
         binding.tvHeadline.setText(tweet.getUser().getName());
+
         String relative_time = ParseRelativeDate.getRelativeTimeAgo(tweet.getCreatedAt());
 
         binding.tvTime.setText(relative_time);

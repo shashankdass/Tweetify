@@ -2,14 +2,18 @@ package com.codepath.apps.mysimpletweets.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.activity.TweetDetailsActivity;
@@ -29,23 +33,27 @@ public class TimelineFragment extends Fragment {
     RecyclerView rvTweets;
     protected ArrayList<Tweet> tweets;
     protected SwipeRefreshLayout swipeContainer;
-    static long since_id=1;
-    static long max_id=-1;
+    public static long since_id=1;
+    public static long max_id=-1;
 
     TweetsAdapter tweetAdapter;
     protected OnTimelineFragmentInteractionListener listener;
+    MenuItem miActionProgressItem;
     public TimelineFragment() {
         // Required empty public constructor
-    }
-    public static TimelineFragment newInstance() {
-        TimelineFragment timelineFragment = new TimelineFragment();
-        return timelineFragment;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.fragment_action_bar, menu);
+//        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+//        ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(miActionProgressItem);
+//    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -62,9 +70,7 @@ public class TimelineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-//        View view = inflater.inflate(R.layout.fragment_timeline, container, false);
-        fragmentTimelineBinding = FragmentTimelineBinding.inflate(inflater,container,true);
-//        fragmentTimelineBinding = DataBindingUtil.setContentView(getActivity(),R.layout.fragment_timeline);
+        fragmentTimelineBinding = FragmentTimelineBinding.inflate(inflater,null,true);
         rvTweets = fragmentTimelineBinding.rvTweets;
         swipeContainer = fragmentTimelineBinding.swipeContainer;
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,

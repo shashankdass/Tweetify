@@ -12,22 +12,20 @@
         android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:label=""
         android:theme="@style/AppTheme">
         <meta-data
             android:name="AA_DB_NAME"
             android:value="RestClient.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="3" />
-<meta-data
-    android:name="AA_MODELS"
-    android:value="com.codepath.apps.mysimpletweets.models.Tweet,
-     com.codepath.apps.mysimpletweets.models.User,
-        com.codepath.apps.mysimpletweets.models.Media"/>
+            android:value="5" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="com.codepath.apps.mysimpletweets.models.Tweet,              com.codepath.apps.mysimpletweets.models.User,               com.codepath.apps.mysimpletweets.models.Media" />
+
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +45,6 @@
         </activity>
         <activity
             android:name=".activity.TimelineActivity"
-            android:label="@string/title_activity_timeline"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <!--
@@ -59,6 +56,11 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activity.TweetDetailsActivity" />
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.SearchTweetActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
