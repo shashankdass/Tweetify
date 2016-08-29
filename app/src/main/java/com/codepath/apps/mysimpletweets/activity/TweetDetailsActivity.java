@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.codepath.apps.mysimpletweets.R;
@@ -30,8 +31,16 @@ public class TweetDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         twitterClient = TwitterApp.getRestClient();
         binding  = DataBindingUtil.setContentView(this,R.layout.activity_tweet_details);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.ll_toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.twitter_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         tweet = Parcels.unwrap(getIntent().getParcelableExtra("tweet"));
         Picasso.with(this).load(tweet.getUser().getProfileImageURL()).
                 transform(new RoundedCornersTransformation(2,2)).into(binding.ibtnThumbnail);

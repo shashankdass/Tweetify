@@ -1,5 +1,6 @@
 package com.codepath.apps.mysimpletweets.dialogs;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,17 +16,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.NetworkFailure;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApp;
 import com.codepath.apps.mysimpletweets.TwitterClient;
+import com.codepath.apps.mysimpletweets.activity.ContactsActivity;
+import com.codepath.apps.mysimpletweets.activity.ProfileActivity;
 import com.codepath.apps.mysimpletweets.databinding.ComposeFragmentBinding;
+import com.codepath.apps.mysimpletweets.utils.PatternEditableBuilder;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
@@ -136,6 +143,19 @@ public class ComposeDialog extends DialogFragment {
                 binding.tvWordCount.setText(""+remaining_word_count);
             }
         });
+        new PatternEditableBuilder().
+                addPattern(Pattern.compile("\\@(\\w+)"), R.color.twitter_blue,
+                        new PatternEditableBuilder.SpannableClickedListener() {
+                            @Override
+                            public void onSpanClicked(String text) {
+//                                Intent i = new Intent(getContext(),ProfileActivity.class);
+//                                i.putExtra("user_screen_name",text);
+                                Toast.makeText(getContext(), "Clicked username: " + text,
+                                        Toast.LENGTH_SHORT).show();
+
+//                                startActivity(i);
+                            }
+                        }).into(messageBox);
         twitterClient = TwitterApp.getRestClient();
         btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override

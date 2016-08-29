@@ -48,39 +48,46 @@ public class ProfileActivity extends AppCompatActivity
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         twitterClient = TwitterApp.getRestClient();
         Tweet tweet = Parcels.unwrap(getIntent().getParcelableExtra("tweet"));
-        if(tweet == null) {
-            try {
-                twitterClient.getUserInfo(new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        User user = User.fromJSON(response);
-                        getSupportActionBar().setTitle("@" + user.getScreenName());
-                        populateProfileHeader(user);
+        String screen_name = getIntent().getStringExtra("user_screen_name");
+        if (screen_name!=null) {
+            startProfileFragment(screen_name);
+        } else if(tweet == null) {
+                try {
+                    twitterClient.getUserInfo(new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            super.onSuccess(statusCode, headers, response);
+                            User user = User.fromJSON(response);
+                            getSupportActionBar().setTitle("@" + user.getScreenName());
+                            populateProfileHeader(user);
 
-                    }
+                        }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        super.onFailure(statusCode, headers, throwable, errorResponse);
-                    }
-                });
-            } catch (NetworkFailure networkFailure) {
-                networkFailure.printStackTrace();
-            }
-        } else {
-            getSupportActionBar().setTitle("@" +tweet.getUser().getScreenName());
-            populateProfileHeader(tweet.getUser());
-        }
-        if(savedInstanceState == null) {
-            String screenName = "";
-            if (tweet != null)
-                screenName = tweet.getUser().getScreenName();
-            UserTimelineFragment userTimelineFragment = UserTimelineFragment.newInstance(screenName);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(binding.flContainer.getId(), userTimelineFragment);
-            ft.commit();
-        }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            super.onFailure(statusCode, headers, throwable, errorResponse);
+                        }
+                    });
+                } catch (NetworkFailure networkFailure) {
+                    networkFailure.printStackTrace();
+                }
+                } else {
+                    getSupportActionBar().setTitle("@" +tweet.getUser().getScreenName());
+                    populateProfileHeader(tweet.getUser());
+                }
+                if(savedInstanceState == null) {
+                    String screenName = "";
+                    if (tweet != null)
+                    screenName = tweet.getUser().getScreenName();
+                    startProfileFragment(screenName);
+                }
+    }
+
+    private void startProfileFragment(String screenName) {
+        UserTimelineFragment userTimelineFragment = UserTimelineFragment.newInstance(screenName);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(binding.flContainer.getId(), userTimelineFragment);
+        ft.commit();
     }
 
     private void populateProfileHeader(User user) {
