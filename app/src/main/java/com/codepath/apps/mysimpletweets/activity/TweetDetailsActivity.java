@@ -1,10 +1,10 @@
 package com.codepath.apps.mysimpletweets.activity;
 
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 
 import com.codepath.apps.mysimpletweets.R;
@@ -46,8 +46,17 @@ public class TweetDetailsActivity extends AppCompatActivity {
                     transform(new RoundedCornersTransformation(5, 5))
                     .into(binding.ivMainImage);
         }
-        if(Integer.parseInt(tweet.getFavorites_count()) == 0) {
-            binding.ivStar.setImageResource(R.drawable.star_icon);
+        binding.ivReply.setImageResource(R.drawable.reply);
+        if (Integer.parseInt(tweet.getRetweet_count()) > 0)
+            binding.ivRetweet.setImageResource(R.drawable.retweet_pressed);
+        else
+            binding.ivRetweet.setImageResource(R.drawable.retweet);
+        binding.ivStar.setImageResource(0);
+
+        if (Integer.parseInt(tweet.getFavorites_count()) == 0) {
+            binding.ivStar.setImageResource(R.drawable.star_icon_plain);
+        } else {
+            binding.ivStar.setImageResource(R.drawable.fav_icon);
         }
         binding.ivRetweet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +84,8 @@ public class TweetDetailsActivity extends AppCompatActivity {
         binding.ivStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Integer.parseInt(tweet.getFavorites_count()) == 0) {
+                if (Integer.parseInt(tweet.getFavorites_count()) >= 0) {
+                    binding.ivStar.setImageResource(0);
                     binding.ivStar.setImageResource(R.drawable.fav_icon);
                 }
                 int new_likes_count = Integer.parseInt(tweet.getFavorites_count())+1;

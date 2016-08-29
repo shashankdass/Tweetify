@@ -15,7 +15,7 @@
             layout="@layout/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/include">
+            >
         </include>
         <FrameLayout
             android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/include">
+            android:layout_below="@+id/ll_toolbar">
         </FrameLayout>
     </RelativeLayout>
 

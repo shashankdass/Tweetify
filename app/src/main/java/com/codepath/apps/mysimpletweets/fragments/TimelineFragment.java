@@ -4,22 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
-import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.activity.TweetDetailsActivity;
 import com.codepath.apps.mysimpletweets.adapters.TweetsAdapter;
 import com.codepath.apps.mysimpletweets.databinding.FragmentTimelineBinding;
 import com.codepath.apps.mysimpletweets.models.Tweet;
+import com.codepath.apps.mysimpletweets.utils.DividerItemDecoration;
 import com.codepath.apps.mysimpletweets.utils.ItemClickSupport;
 
 import org.parceler.Parcels;
@@ -47,13 +43,6 @@ public class TimelineFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.fragment_action_bar, menu);
-//        miActionProgressItem = menu.findItem(R.id.miActionProgress);
-//        ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(miActionProgressItem);
-//    }
-
 
     @Override
     public void onAttach(Context context) {
@@ -72,6 +61,9 @@ public class TimelineFragment extends Fragment {
 
         fragmentTimelineBinding = FragmentTimelineBinding.inflate(inflater,null,true);
         rvTweets = fragmentTimelineBinding.rvTweets;
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(this.getContext(), DividerItemDecoration.VERTICAL_LIST);
+        rvTweets.addItemDecoration(itemDecoration);
         swipeContainer = fragmentTimelineBinding.swipeContainer;
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.darker_gray);

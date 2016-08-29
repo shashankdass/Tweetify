@@ -2,7 +2,6 @@ package com.codepath.apps.mysimpletweets.activity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
@@ -13,26 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.codepath.apps.mysimpletweets.NetworkFailure;
 import com.codepath.apps.mysimpletweets.R;
-import com.codepath.apps.mysimpletweets.TwitterApp;
-import com.codepath.apps.mysimpletweets.TwitterClient;
 import com.codepath.apps.mysimpletweets.adapters.TimelineFragmentPagerAdapter;
 import com.codepath.apps.mysimpletweets.databinding.ActivityTimelineBinding;
 import com.codepath.apps.mysimpletweets.dialogs.ComposeDialog;
 import com.codepath.apps.mysimpletweets.fragments.SearchFragment;
 import com.codepath.apps.mysimpletweets.fragments.TimelineFragment;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity
         implements TimelineFragment.OnTimelineFragmentInteractionListener {
@@ -45,7 +33,7 @@ public class TimelineActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityTimelineBinding = DataBindingUtil.setContentView(this, R.layout.activity_timeline);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.ll_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);

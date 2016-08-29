@@ -1,15 +1,14 @@
 package com.codepath.apps.mysimpletweets;
 
-import org.scribe.builder.api.Api;
-import org.scribe.builder.api.FlickrApi;
-import org.scribe.builder.api.TwitterApi;
-
 import android.content.Context;
 
 import com.codepath.apps.mysimpletweets.utils.NetworkHealthChecker;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import org.scribe.builder.api.Api;
+import org.scribe.builder.api.TwitterApi;
 
 /*
  * 
@@ -63,6 +62,9 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 
 		params.put("count", 25);
+		params.put("since_id",since_id);
+		if(max_id > 0)
+			params.put("max_id", max_id);
 		if (new NetworkHealthChecker(context).checkNetworkHealth())
 			getClient().get(apiUrl, params, handler);
 		else {

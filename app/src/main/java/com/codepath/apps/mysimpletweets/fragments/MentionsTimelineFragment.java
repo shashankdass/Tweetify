@@ -81,6 +81,8 @@ public class MentionsTimelineFragment extends TimelineFragment {
                 // Add whatever code is needed to append new items to the bottom of the list
                 TimelineFragment.since_id=1;
                 populateTimeline();
+                swipeContainer.setRefreshing(false);
+
             }
         });
         bindDataToAdapter();

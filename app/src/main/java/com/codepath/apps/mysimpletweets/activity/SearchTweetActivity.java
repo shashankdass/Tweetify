@@ -1,9 +1,9 @@
 package com.codepath.apps.mysimpletweets.activity;
 
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
@@ -14,14 +14,15 @@ import com.codepath.apps.mysimpletweets.databinding.ActivitySearchBinding;
 import com.codepath.apps.mysimpletweets.fragments.SearchFragment;
 import com.codepath.apps.mysimpletweets.fragments.TimelineFragment;
 
-public class SearchTweetActivity extends AppCompatActivity  implements TimelineFragment.OnTimelineFragmentInteractionListener{
+public class SearchTweetActivity extends AppCompatActivity
+        implements TimelineFragment.OnTimelineFragmentInteractionListener{
     ActivitySearchBinding binding;
     TwitterClient twitterClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.ll_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);

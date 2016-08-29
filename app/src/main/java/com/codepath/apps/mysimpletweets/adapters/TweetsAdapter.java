@@ -11,7 +11,6 @@ import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.databinding.TweetRowLayoutBinding;
 import com.codepath.apps.mysimpletweets.databinding.TweetRowLayoutImageBinding;
 import com.codepath.apps.mysimpletweets.models.Tweet;
-import com.codepath.apps.mysimpletweets.models.User;
 import com.codepath.apps.mysimpletweets.view.TweetViewHolder;
 import com.codepath.apps.mysimpletweets.view.TweetViewHolderWithImage;
 

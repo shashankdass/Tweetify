@@ -137,6 +137,27 @@ public class Tweet extends Model {
     private String favorites_count;
     @Column(name = "MediaUrl")
     private String media_url;
+    @Column(name = "isRetweeted")
+    private Boolean isRetweeted;
+    @Column(name = "isFavorited")
+    private Boolean isfavorited;
+
+    public Boolean getIsRetweeted() {
+        return isRetweeted;
+    }
+
+    public void setIsRetweeted(Boolean isRetweeted) {
+        this.isRetweeted = isRetweeted;
+    }
+
+    public Boolean getIsfavorited() {
+        return isfavorited;
+    }
+
+    public void setIsfavorited(Boolean isfavorited) {
+        this.isfavorited = isfavorited;
+    }
+
 
     public String getMedia_url() {
         return media_url;
@@ -205,6 +226,8 @@ public class Tweet extends Model {
             tweet.user = User.fromJSON(object.getJSONObject("user"));
             tweet.favorites_count = object.getString("favorite_count");
             tweet.retweet_count = object.getString("retweet_count");
+            tweet.isfavorited = object.getBoolean("favorited");
+            tweet.isRetweeted = object.getBoolean("retweeted");
             JSONArray mediaArray = object.getJSONObject("entities").getJSONArray("media");
             if(mediaArray != null && mediaArray.length() > 0)
                 tweet.media_url = mediaArray.getJSONObject(0).getString("media_url");

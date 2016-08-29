@@ -1,36 +1,19 @@
 package com.codepath.apps.mysimpletweets.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.codepath.apps.mysimpletweets.BR;
 import com.codepath.apps.mysimpletweets.R;
-import com.codepath.apps.mysimpletweets.TwitterApp;
-import com.codepath.apps.mysimpletweets.activity.ProfileActivity;
 import com.codepath.apps.mysimpletweets.databinding.ContactRowLayoutBinding;
-import com.codepath.apps.mysimpletweets.databinding.TweetRowLayoutBinding;
-import com.codepath.apps.mysimpletweets.databinding.TweetRowLayoutImageBinding;
-import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.codepath.apps.mysimpletweets.models.User;
-import com.codepath.apps.mysimpletweets.utils.ParseRelativeDate;
-import com.codepath.apps.mysimpletweets.view.TweetViewHolder;
-import com.codepath.apps.mysimpletweets.view.TweetViewHolderWithImage;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONObject;
-import org.parceler.Parcels;
 
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**

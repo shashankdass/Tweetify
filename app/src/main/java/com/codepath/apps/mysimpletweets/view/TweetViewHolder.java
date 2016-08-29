@@ -11,8 +11,8 @@ import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApp;
 import com.codepath.apps.mysimpletweets.TwitterClient;
 import com.codepath.apps.mysimpletweets.activity.ProfileActivity;
-import com.codepath.apps.mysimpletweets.dialogs.ReplyDialog;
 import com.codepath.apps.mysimpletweets.databinding.TweetRowLayoutBinding;
+import com.codepath.apps.mysimpletweets.dialogs.ReplyDialog;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.codepath.apps.mysimpletweets.utils.ParseRelativeDate;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -23,8 +23,6 @@ import org.parceler.Parcels;
 
 import cz.msebera.android.httpclient.Header;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
-
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 /**
  * Created by sdass on 8/17/16.
@@ -61,13 +59,16 @@ public class TweetViewHolder extends RecyclerView.ViewHolder{
         String relative_time = ParseRelativeDate.getRelativeTimeAgo(tweet.getCreatedAt());
 
         binding.tvTime.setText(relative_time);
-        Picasso.with(mContext).load(R.drawable.reply_action).into(binding.ivReply);
-        Picasso.with(mContext).load(R.drawable.retweet_action).into(binding.ivRetweet);
+        binding.ivReply.setImageResource(R.drawable.reply);
+        if (Integer.parseInt(tweet.getRetweet_count()) > 0)
+            binding.ivRetweet.setImageResource(R.drawable.retweet_pressed);
+        else
+            binding.ivRetweet.setImageResource(R.drawable.retweet);
+        binding.ivStar.setImageResource(0);
+
         if (Integer.parseInt(tweet.getFavorites_count()) == 0) {
-            binding.ivStar.setImageResource(0);
-            Picasso.with(mContext).load(R.drawable.star_icon).into(binding.ivStar);
-        }else {
-            binding.ivStar.setImageResource(0);
+            binding.ivStar.setImageResource(R.drawable.star_icon_plain);
+        } else {
             binding.ivStar.setImageResource(R.drawable.fav_icon);
         }
         binding.tvNumOfLikes.setText(tweet.getFavorites_count());
@@ -76,6 +77,10 @@ public class TweetViewHolder extends RecyclerView.ViewHolder{
         binding.ivRetweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Integer.parseInt(tweet.getRetweet_count()) >= 0) {
+                    binding.ivRetweet.setImageResource(0);
+                    binding.ivRetweet.setImageResource(R.drawable.retweet_pressed);
+                }
                 int new_retweet_count = Integer.parseInt(tweet.getRetweet_count())+1;
                 tweet.setRetweet_count(""+new_retweet_count);
                 binding.tvNumOfRetweets.setText(""+new_retweet_count);

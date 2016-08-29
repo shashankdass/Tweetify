@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.codepath.apps.mysimpletweets.adapters.UsersAdapter;
 import com.codepath.apps.mysimpletweets.databinding.FragmentFollowListBinding;
 import com.codepath.apps.mysimpletweets.models.User;
+import com.codepath.apps.mysimpletweets.utils.DividerItemDecoration;
 
 import java.util.ArrayList;
 
@@ -63,6 +64,9 @@ public class FollowFragment extends Fragment {
 
         followListBinding = FragmentFollowListBinding.inflate(inflater,null,true);
         rvContacts = followListBinding.rvContact;
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(this.getContext(), DividerItemDecoration.VERTICAL_LIST);
+        rvContacts.addItemDecoration(itemDecoration);
         users = new ArrayList<>();
 //        ItemClickSupport.addTo(rvContacts).setOnItemClickListener(
 //                new ItemClickSupport.OnItemClickListener() {

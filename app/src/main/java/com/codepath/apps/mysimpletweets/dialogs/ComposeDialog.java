@@ -166,7 +166,7 @@ dismiss();            }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.compose_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.compose_fragment, null, false);
         View view = binding.getRoot();
 //here data must be an instance of the class MarsDataProvider
         return view;

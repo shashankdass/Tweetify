@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,16 +14,18 @@ import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApp;
 import com.codepath.apps.mysimpletweets.TwitterClient;
 import com.codepath.apps.mysimpletweets.databinding.ActivityProfileBinding;
-import com.codepath.apps.mysimpletweets.fragments.FollowFragment;
 import com.codepath.apps.mysimpletweets.fragments.TimelineFragment;
 import com.codepath.apps.mysimpletweets.fragments.UserTimelineFragment;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.codepath.apps.mysimpletweets.models.User;
+import com.codepath.apps.mysimpletweets.utils.PatternEditableBuilder;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 import org.parceler.Parcels;
+
+import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
@@ -38,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.ll_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
@@ -90,30 +91,34 @@ public class ProfileActivity extends AppCompatActivity
         binding.tvTagline.setText("@"+user.getScreenName());
         TextView tvFollowers = binding.tvFollowers;
         tvFollowers.setText(user.getFollowers()+" Followers");
-        tvFollowers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(ProfileActivity.this,ContactsActivity.class);
-                i.putExtra("user_screen_name",screenName);
-                i.putExtra("followers",true);
-                i.putExtra("following",false);
-                startActivity(i);
-            }
-        });
+        new PatternEditableBuilder().
+                addPattern(Pattern.compile("\\d*(Followers)"), R.color.twitter_blue,
+                        new PatternEditableBuilder.SpannableClickedListener() {
+                            @Override
+                            public void onSpanClicked(String text) {
+                                Intent i = new Intent(ProfileActivity.this,ContactsActivity.class);
+                                i.putExtra("user_screen_name",screenName);
+                                i.putExtra("followers",true);
+                                i.putExtra("following",false);
+                                startActivity(i);
+                            }
+                        }).into(tvFollowers);
+
 
         TextView tvFollowing = binding.tvFollowing;
         tvFollowing.setText(user.getFollowing()+" Following");
-        tvFollowing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(ProfileActivity.this,ContactsActivity.class);
-                i.putExtra("user_screen_name",screenName);
-                i.putExtra("followers",false);
-                i.putExtra("following",true);
-                startActivity(i);
-
-            }
-        });
+        new PatternEditableBuilder().
+                addPattern(Pattern.compile("\\d*(Following)"), R.color.twitter_blue,
+                        new PatternEditableBuilder.SpannableClickedListener() {
+                            @Override
+                            public void onSpanClicked(String text) {
+                                Intent i = new Intent(ProfileActivity.this,ContactsActivity.class);
+                                i.putExtra("user_screen_name",screenName);
+                                i.putExtra("followers",false);
+                                i.putExtra("following",true);
+                                startActivity(i);
+                            }
+                        }).into(tvFollowing);
         binding.tvTagline.setText(user.getTagline());
     }
 
