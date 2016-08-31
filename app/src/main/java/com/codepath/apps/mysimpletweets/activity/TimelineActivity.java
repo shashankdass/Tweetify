@@ -18,6 +18,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.adapters.TimelineFragmentPagerAdapter;
 import com.codepath.apps.mysimpletweets.databinding.ActivityTimelineBinding;
+import com.codepath.apps.mysimpletweets.databinding.ToolbarBinding;
 import com.codepath.apps.mysimpletweets.dialogs.ComposeDialog;
 import com.codepath.apps.mysimpletweets.fragments.SearchFragment;
 import com.codepath.apps.mysimpletweets.fragments.TimelineFragment;
@@ -33,10 +34,11 @@ public class TimelineActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityTimelineBinding = DataBindingUtil.setContentView(this, R.layout.activity_timeline);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.ll_toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.ll_toolbar);
+        ToolbarBinding toolbarBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.toolbar,null,false);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbarBinding.llToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.twitter_logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
